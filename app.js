@@ -55,6 +55,10 @@ app.get("/posts/:postName", function(req, res){
 
   posts.forEach(function(post){
     const storedTitle = post.title;
+
+    if (storedTitle ===  requestedTitle){
+      console.log("Match found!");
+    }
   });
 });
 
