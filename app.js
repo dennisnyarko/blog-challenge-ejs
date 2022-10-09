@@ -35,13 +35,7 @@ app.get("/", function(req, res){
   });
 });
 
-app.get("/", function(req, res){
-  res.render("home", {
-    startingContent: homeStartingContent,
-    posts: posts
-  
-  });
-});
+
 
 app.get("/about", function(req, res){
   res.render("about", {aboutContent: aboutContent});
@@ -61,25 +55,22 @@ app.post("/compose", function(req, res){
     content: req.body.postBody
   });
 
-  post.save();
-
-  res.redirect("/");
-
-
+  post.save(function(err){
+    if (!err){
+      res.redirect("/");
+    }
+  });
 });
 
-app.get("/posts/:postName", function(req, res){
-  const requestedTitle = _.lowerCase(req.params.postName);
+app.get("/posts/:postId", function(req, res){
 
-  posts.forEach(function(post){
-    const storedTitle = _.lowerCase(post.title);
+  const requestedPostId = req.params.postId;
 
-    if (storedTitle ===  requestedTitle){
-      res.render("post", {
-        title: post.title,
-        content: post.content
-      });
-    }
+  Post.findOne({_id: requestedPostId}, function(err, post){
+    res.render("post", {
+      title: post.title,
+      content: post.content
+   });
   });
 });
 
