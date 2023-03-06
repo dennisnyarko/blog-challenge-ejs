@@ -1,3 +1,3 @@
 # blog-challenge-ejs
 
-A blogging feature made using EJS
+- A blogging feature made using EJS
